@@ -1,48 +1,3 @@
-// Создать программу, которая с помощью alert поздоровается с пользователем, а затем, с помощью prompt предложит выбрать один из пунктов:
-// a) Зарегистрироваться
-// b) Авторизироваться
-// c) Просмотреть список всех пользователей
-// d) Изменить данные пользователя
-// q) Выйти
-// При вводе любого отличного от данных символа, с помощью alert должно выводиться сообщение о том, что нужно выбрать только один из данных пунктов, после чего приглашение о выборе должно появиться снова.
-
-// Регистрация:
-// При выборе пункта "Регистрация", пользователю должны начать поступать одно за другим предложения ввода данных с помощью prompt, а именно: имя, фамилия, возраст, email и пароль. После этого должен создаться новый объект, в свойства которого будут записаны введённые пользователем данные. Список пользователей, представленный массивом, должен пополниться новым пользователем. После всего этого в консоль должно вывестись сообщение о том, что новый пользователь был добавлен, а также названы его имя и фамилия.
-
-// После данной операции пользователю должно поступить предложение, с помощью confirm, продолжить манипуляции (выбрать очередной пункт из списка приглашения). Если ответ положительный, то всё начинается заново, а если отрицательный - программа прощается с пользователем и завершает своё выполнение.
-
-// Авторизация:
-// При выборе пункта "Авторизация", пользователю по очереди должны поступить предложения ввести email и пароль. После этого необходимо проверить всех пользователей на совпадение email с тем, который был только что введён. Если совпадение найдено, дополнительно должен провериться пароль, в противном случае, пользователю должно выпасть сообщение в консоль о том, что пользователя с предоставленными данными не было найдено. В случае же успеха (совпадение и email, и пароль) должно выдать сообщение в консоль о том, что пользователь был успешно авторизирован, после чего выводятся по очереди свойство-значение данного пользователя, например [name]: John, [age]: 35...
-
-// После данной операции пользователю должно поступить предложение, с помощью confirm, продолжить манипуляции (выбрать очередной пункт из списка приглашения). Если ответ положительный, то всё начинается заново, а если отрицательный - программа прощается с пользователем и завершает своё выполнение.
-
-// Просмотреть список всех пользователей:
-// При выборе "Просмотреть список всех пользователей", в консоль должно вывестись количество пользователей, а затем список всех пользователей с таким же подробным выводом свойств-значений как и в "Авторизации". Каждый последующий пользователь должен быть отделён чертой в консоли. Если же пользователей ещё нет, то в консоль должно вывестись соответствующее сообщение.
-
-// После данной операции пользователю должно поступить предложение, с помощью confirm, продолжить манипуляции (выбрать очередной пункт из списка приглашения). Если ответ положительный, то всё начинается заново, а если отрицательный - программа прощается с пользователем и завершает своё выполнение.
-
-// Изменить данные пользователя:
-// К этому пункту я не прилагаю подробного описания и он подразумевает поиск самостоятельного решения (не обязательно к выполнению).
-
-// Выйти:
-// При выборе "Выйти", программа прощается с пользователем с помощью alert и завершается
-
-// Особенности:
-// Предыдущие особенности остаются
-// Воспользоваться объектами
-// Воспользоваться массивами
-// Воспользоваться функциями
-// Итого:
-// Должна получиться своеобразная База Данных пользователей, которую можно пополнять новыми пользователями и искать существующих.
-//alert("Hello Stranger");
-
-// 1.1 Условие, юзер выбрал корректную опцию продолжаем работу, если нет, то сказать "Ошибка, давай еще раз" и начать заново
-// 1.2 Условие, если параметрам промпта такой/такой/такой/такой/, создай обьект и создай в нем ключ, у которого значение равно параметру из промпта
-// 1.3 Добавить этот обьект в массив пользователей
-// 1.4 Вывести в консоль имя и фам юзера
-// 1.5 Вызвать алерт для продолжения операции и если : да -> начать с пункта 1.1 / нет -> бай бай
-
-
 alert("Hi!")
 const suggest = "a) Registrate.\nb) Sign in.\nc) Check users list.\nd) Change personal data.\nq) Exit.";
 userChoosingOption(suggest);
@@ -58,26 +13,59 @@ function registerNewUser(array) {
     newUser.userPassword = prompt("Passsword please", "Password");
     array.push(newUser);
     console.log(newUser.userFirstName, newUser.userLastName, " added")
-}
+};
 
 // if your choose "b" this function suggesting email and password
-function signIn(newUser) {
+function signIn(array) {
     signEmail = prompt("Email please", "Email");
     signPass = prompt("Passsword please", "Password");
 
-    for (i = 0; i < newUser.length; i++) {
-        if (newUser[i] == signEmail || newUser[i] == signPass) {
-            console.log("Matches found")
-            debugger;
-        } else {
-            console.log("BCE XYIH9")
+    function findUser(userObject) {
+        if (userObject.userEmail === signEmail && userObject.userPassword === signPass) {
+            return true;
         }
+        return false;
     }
+
+    let foundUser = array.find(findUser)
+    if (foundUser) {
+        console.log(foundUser)
+    } else {
+        console.log("User not found")
+    }
+    // Finding matches if user already exists using forEach; note: it goes through each element and displays actual amount of not found users, then shows found and if after this array got more object shows NOT FOUND again
+    // let user;
+    // usersArray.forEach(function (userObject) {
+    //     if (userObject.userEmail === signEmail) {
+    //         user = userObject;
+    //     }
+    // });
+    // if (user) {
+    //     console.log(user);
+    // } else {
+    //     console.log("Such user doesnt exist")
+    // }
 }
-debugger
+
+// if your choose "c" this function checks such user and if TRUE displays its own keys and value, if none says Empty list
+function checkUserList(array) {
+    if (array.length === 0) {
+        console.log("Empty list");
+        return;
+    }
+
+    array.forEach(function (userObj) {
+
+        for (key in userObj) {
+            console.log("KEY = ", key, "VALUE = ", userObj[key])
+        }
+        console.log("--------------------------------------")
+    })
+}
+
+//Main part of programm, conditions of chooses.
 function userChoosingOption(message) {
     let usersArray = [];
-
 
     while (true) {
         let options = prompt(message, "Select option");
@@ -85,9 +73,9 @@ function userChoosingOption(message) {
             registerNewUser(usersArray);
 
         } else if (options === "b" || options === "B") {
-            signIn(usersArray)
+            signIn(usersArray);
         } else if (options === "c" || options === "C") {
-
+            checkUserList(usersArray);
         } else if (options === "d" || options === "D") {
 
         } else if (options === "q" || options === "Q") {
@@ -104,4 +92,3 @@ function userChoosingOption(message) {
         }
     }
 };
-
